@@ -8,14 +8,25 @@ public class MainFrame extends JFrame{
     public static final int HEIGHT = 500;
 
     private JPanel mainPanel;
+
+    private JPanel messagesPanel;
+    private JPanel introPanel;
+
     private JButton sendBtn;
     private JTextArea messagesTxt;
     private JTextField messageInputTxt;
+
+    private JLabel introLabel;
+    private JTabbedPane tabbedPanel;
+    private JTextField nickInput;
+    private JPanel nickPanel;
+    private JButton goToChat;
 
     public MainFrame(){
         setSize(WIDTH, HEIGHT);
         setContentPane(mainPanel);
         setLocationRelativeTo(null);
+
     }
 
     public JButton getSendBtn() {
@@ -28,5 +39,32 @@ public class MainFrame extends JFrame{
 
     public JTextArea getMessagesTxt() {
         return messagesTxt;
+    }
+
+    public JPanel getMessagesPanel() {
+        return messagesPanel;
+    }
+
+    public JPanel getIntroPanel() {
+        return introPanel;
+    }
+    public JLabel getIntroLabel() {
+        return introLabel;
+    }
+
+    public JTabbedPane getTabbedPanel() {
+        return tabbedPanel;
+    }
+
+    public JTextField getNickInput() {
+        return nickInput;
+    }
+
+    public JPanel getNickPanel() {
+        return nickPanel;
+    }
+
+    public JButton getGoToChat() {
+        return goToChat;
     }
 }

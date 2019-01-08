@@ -13,6 +13,8 @@ public class MainFrameController {
     private JTextArea messagesTxt;
     private JTextField messageInputTxt;
 
+    private SettingsController settingsController;
+
     public MainFrameController() {
         initComopnents();
         initListeners();
@@ -24,9 +26,15 @@ public class MainFrameController {
 
     private void initComopnents(){
         this.mainFrame = new MainFrame();
+
+        settingsController = new SettingsController(this.mainFrame);
+
         sendBtn = mainFrame.getSendBtn();
         messagesTxt = mainFrame.getMessagesTxt();
         messageInputTxt = mainFrame.getMessageInputTxt();
+
+        mainFrame.getMessagesPanel().setVisible(false);
+        mainFrame.getIntroPanel().setVisible(true);
     }
 
     private void initListeners() {
