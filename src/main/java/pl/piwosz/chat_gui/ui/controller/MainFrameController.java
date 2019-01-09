@@ -5,6 +5,11 @@ import pl.piwosz.chat_gui.ui.view.MainFrame;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.Socket;
 
 public class MainFrameController {
     private MainFrame mainFrame;
@@ -15,9 +20,16 @@ public class MainFrameController {
 
     private SettingsController settingsController;
 
+    private Socket socket;
+
     public MainFrameController() {
         initComopnents();
         initListeners();
+        try {
+            socket = new Socket(InetAddress.getByName("0.0.0.0"), 1234);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void showMainFrameWindow(){
@@ -27,7 +39,7 @@ public class MainFrameController {
     private void initComopnents(){
         this.mainFrame = new MainFrame();
 
-        settingsController = new SettingsController(this.mainFrame);
+        settingsController = new SettingsController(this.mainFrame, socket);
 
         sendBtn = mainFrame.getSendBtn();
         messagesTxt = mainFrame.getMessagesTxt();
@@ -45,6 +57,14 @@ public class MainFrameController {
         public void actionPerformed(ActionEvent e) {
             String text = messageInputTxt.getText();
             messagesTxt.append(text);
+            try {
+                PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+                out.println(text);
+        		out.flush();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+
         }
     }
 }

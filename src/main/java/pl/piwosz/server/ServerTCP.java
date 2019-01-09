@@ -10,8 +10,7 @@ import java.util.concurrent.Executors;
 public class ServerTCP {
 	public static void main(String args[]) {
 		if (args.length == 0)
-			System.out
-					.println("WprowadŸ numer portu, na którym serwer bêdzie oczekiwa³ na klientów");
+			System.out.println("WprowadŸ numer portu, na którym serwer bêdzie oczekiwa³ na klientów");
 		else {
 			int port = 0;
 			try {

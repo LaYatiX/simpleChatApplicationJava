@@ -47,7 +47,6 @@ public class ServerTCPCall implements Callable<String> {
             }
 
 //			ObjectInputStream ois = new ObjectInputStream(mySocket.getInputStream());
-
 //            A fromServer = (A) ois.readObject();
 //			System.out.println(fromServer.name);
 

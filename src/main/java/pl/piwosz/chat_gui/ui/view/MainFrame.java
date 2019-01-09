@@ -21,6 +21,13 @@ public class MainFrame extends JFrame{
     private JTextField nickInput;
     private JPanel nickPanel;
     private JButton goToChat;
+    private JPanel privateMessagesPanel;
+    private JTextArea privateMessagesArea;
+    private JTextField privateMessagesTextField;
+    private JButton sendPrivateButton;
+    private JTextField privateNickField;
+    private JButton goToPrivateChat;
+    private JPanel privateNickPanel;
 
     public MainFrame(){
         setSize(WIDTH, HEIGHT);
