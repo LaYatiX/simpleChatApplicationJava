@@ -25,30 +25,23 @@ public class ServerTCPCall implements Callable<String> {
     public String call() {
         String txt = mySocket.getInetAddress().getHostName();
         try {
+            ObjectInputStream ois = new ObjectInputStream(mySocket.getInputStream());
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));
-
-            /* odbieramy i drukujemy ... */
-            String str;
-            while (!(str = in.readLine()).equals("exit")) {
-                final String str2 = str;
-                System.out.println(str);
+            Message message;
+            while (!(message = (Message) ois.readObject()).equals("")) {
+                final String text = message.toString();
 
                 sockets.forEach(socket -> {
-                    PrintWriter out = null;
+                    PrintWriter out;
                     try {
                         out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+                        out.println(text);
+                        out.flush();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    out.println(str2 + " server ");
-                    out.flush();
                 });
             }
-
-//			ObjectInputStream ois = new ObjectInputStream(mySocket.getInputStream());
-//            A fromServer = (A) ois.readObject();
-//			System.out.println(fromServer.name);
 
             mySocket.close();
         } catch (Exception e) {

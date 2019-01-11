@@ -130,7 +130,7 @@
                 <properties>
                   <editable value="false"/>
                   <enabled value="false"/>
-                  <text value="Wiadomości"/>
+                  <text value=""/>
                 </properties>
               </component>
               <component id="3a04a" class="javax.swing.JTextField" binding="messageInputTxt">

@@ -21,6 +21,7 @@ public class MainFrame extends JFrame{
     private JTextField nickInput;
     private JPanel nickPanel;
     private JButton goToChat;
+
     private JPanel privateMessagesPanel;
     private JTextArea privateMessagesArea;
     private JTextField privateMessagesTextField;
@@ -28,12 +29,12 @@ public class MainFrame extends JFrame{
     private JTextField privateNickField;
     private JButton goToPrivateChat;
     private JPanel privateNickPanel;
+    private JPanel labeledMessagesPanel;
 
     public MainFrame(){
         setSize(WIDTH, HEIGHT);
         setContentPane(mainPanel);
         setLocationRelativeTo(null);
-
     }
 
     public JButton getSendBtn() {
@@ -73,5 +74,37 @@ public class MainFrame extends JFrame{
 
     public JButton getGoToChat() {
         return goToChat;
+    }
+
+    public JPanel getPrivateMessagesPanel() {
+        return privateMessagesPanel;
+    }
+
+    public JTextArea getPrivateMessagesArea() {
+        return privateMessagesArea;
+    }
+
+    public JTextField getPrivateMessagesTextField() {
+        return privateMessagesTextField;
+    }
+
+    public JButton getSendPrivateButton() {
+        return sendPrivateButton;
+    }
+
+    public JTextField getPrivateNickField() {
+        return privateNickField;
+    }
+
+    public JButton getGoToPrivateChat() {
+        return goToPrivateChat;
+    }
+
+    public JPanel getPrivateNickPanel() {
+        return privateNickPanel;
+    }
+
+    public JPanel getLabeledMessagesPanel() {
+        return labeledMessagesPanel;
     }
 }

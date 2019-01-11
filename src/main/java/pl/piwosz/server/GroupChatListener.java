@@ -7,13 +7,12 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 
-public class ClientTCPCall implements Callable<String> {
+public class GroupChatListener implements Callable<String> {
     Socket mySocket;
     private JTextArea messagesTxt;
-
     ClientFutureCallback<String> ft;
 
-    public ClientTCPCall(Socket socket, JTextArea messagesTxt) {
+    public GroupChatListener(Socket socket, JTextArea messagesTxt) {
         this.messagesTxt = messagesTxt;
         mySocket = socket;
         ft = new ClientFutureCallback<String>(this);
@@ -25,13 +24,10 @@ public class ClientTCPCall implements Callable<String> {
         try {
 
             BufferedReader in = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));
-
+            //nasłuchiwanie klienta na wysłanie info od serwera
             String str;
-            while (!(str = in.readLine()).isEmpty()) {
-                final String str2 = str;
-                String text = messagesTxt.getText();
-                messagesTxt.append(text);
-                System.out.println(str);
+            while (!(str = in.readLine()).equals("exit")) {
+                messagesTxt.append(str + "\r\n");
             }
 
             mySocket.close();
@@ -55,7 +51,7 @@ class ClientFutureCallback<T> extends FutureTask<T> {
      * Metoda uruchamiana po zakończeniu wykonywania zadania
      */
     public void done() {
-        String s = "Zakończenie taska klienta";
+        String s = "Zakończenie nasłuchiwania na chat prywatny";
         if (isCancelled())
             s += "Anulowano";
         else {
