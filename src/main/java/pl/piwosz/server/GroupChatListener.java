@@ -1,19 +1,28 @@
 package pl.piwosz.server;
 
+import pl.piwosz.chat_gui.ui.controller.SettingsController;
+import pl.piwosz.chat_gui.ui.view.MainFrame;
+
 import javax.swing.*;
 import java.io.*;
+import java.net.InetAddress;
 import java.net.Socket;
-import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 
 public class GroupChatListener implements Callable<String> {
-    Socket mySocket;
+    private Socket mySocket;
     private JTextArea messagesTxt;
-    ClientFutureCallback<String> ft;
+    private JTextArea privateMessagesArea;
+    private JTextField privateNickField;
+    private  JTextField nickField;
 
-    public GroupChatListener(Socket socket, JTextArea messagesTxt) {
+    private ClientFutureCallback<String> ft;
+    public GroupChatListener(Socket socket, JTextArea messagesTxt, JTextArea privateMessagesArea, JTextField privateNickField, JTextField nickField) {
         this.messagesTxt = messagesTxt;
+        this.privateMessagesArea = privateMessagesArea;
+        this.privateNickField = privateNickField;
+        this.nickField = nickField;
         mySocket = socket;
         ft = new ClientFutureCallback<String>(this);
     }
@@ -22,12 +31,22 @@ public class GroupChatListener implements Callable<String> {
     public String call() throws Exception {
         String txt = mySocket.getInetAddress().getHostName();
         try {
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));
+//            BufferedReader in = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));
+            ObjectInputStream in = new ObjectInputStream(mySocket.getInputStream());
             //nasłuchiwanie klienta na wysłanie info od serwera
-            String str;
-            while (!(str = in.readLine()).equals("exit")) {
-                messagesTxt.append(str + "\r\n");
+            Message message;
+            while (!(message = (Message) in.readObject()).equals("")) {
+                if(!message.isPrivate() && message.getReciver() == null)
+                    messagesTxt.append(message + "\r\n");
+                else{
+                    String sender = message.getNick();
+                    String reciver = message.getReciver();
+                    String myNick = nickField.getText();
+                    String yourNick = privateNickField.getText();
+                    if(sender.equals(myNick) || sender.equals(yourNick) || reciver.equals(myNick) || reciver.equals(yourNick)){
+                        privateMessagesArea.append(message + "\r\n");
+                    }
+                }
             }
 
             mySocket.close();
@@ -51,7 +70,7 @@ class ClientFutureCallback<T> extends FutureTask<T> {
      * Metoda uruchamiana po zakończeniu wykonywania zadania
      */
     public void done() {
-        String s = "Zakończenie nasłuchiwania na chat prywatny";
+        String s = "Zakończenie nasłuchiwania na chat grupowy";
         if (isCancelled())
             s += "Anulowano";
         else {

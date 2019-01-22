@@ -1,6 +1,6 @@
-package pl.piwosz.chat_gui.ui.controller;
+package pl.piwosz.server.ui_server.controller;
 
-import pl.piwosz.chat_gui.ui.view.MainFrame;
+import pl.piwosz.server.ui_server.view.MainFrameServer;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -9,7 +9,7 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 
 public class SettingsController {
-    private MainFrame mainFrame;
+    private MainFrameServer mainFrameServer;
     private JButton goToChat;
     private JButton goToPrivateChat;
 
@@ -24,21 +24,21 @@ public class SettingsController {
 
     ExecutorService exec;
 
-    public SettingsController(MainFrame mainFrame, Socket socket) {
+    public SettingsController(MainFrameServer mainFrameServer, Socket socket) {
 //        this.socket = socket;
-        this.mainFrame = mainFrame;
+        this.mainFrameServer = mainFrameServer;
         initComponents();
     }
 
     private void initComponents(){
-        goToChat = mainFrame.getGoToChat();
-        tabbedPanel = mainFrame.getTabbedPanel();
-        nickInput = mainFrame.getServerAdresInput();
-        messagesTxt = mainFrame.getMessagesTxt();
-        labeledMessagesPanel = mainFrame.getLabeledMessagesPanel();
-        goToPrivateChat = mainFrame.getGoToPrivateChat();
-        privateNickField = mainFrame.getPrivateNickField();
-        privateMessagesArea = mainFrame.getPrivateMessagesArea();
+        goToChat = mainFrameServer.getGoToChat();
+        tabbedPanel = mainFrameServer.getTabbedPanel();
+        nickInput = mainFrameServer.getNickInput();
+        messagesTxt = mainFrameServer.getMessagesTxt();
+        labeledMessagesPanel = mainFrameServer.getLabeledMessagesPanel();
+        goToPrivateChat = mainFrameServer.getGoToPrivateChat();
+        privateNickField = mainFrameServer.getPrivateNickField();
+        privateMessagesArea = mainFrameServer.getPrivateMessagesArea();
         goToChat.setEnabled(false);
         goToPrivateChat.setEnabled(false);
 

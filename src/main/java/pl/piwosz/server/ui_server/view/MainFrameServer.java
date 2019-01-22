@@ -1,8 +1,8 @@
-package pl.piwosz.chat_gui.ui.view;
+package pl.piwosz.server.ui_server.view;
 
 import javax.swing.*;
 
-public class MainFrame extends JFrame{
+public class MainFrameServer extends JFrame{
     public static final int WIDTH = 500;
     public static final int HEIGHT = 500;
 
@@ -15,22 +15,10 @@ public class MainFrame extends JFrame{
     private JTextArea messagesTxt;
     private JTextField messageInputTxt;
 
-    private JLabel serverLabel;
+    private JLabel introLabel;
     private JTabbedPane tabbedPanel;
-    private JTextField serverAdresInput;
-    private JPanel settingPanel;
-    private JPanel serverAdres;
-    private JTextField serverPortInput;
-    private JTextField databaseAddress;
-    private JPanel serverPort;
-    private JPanel databaseAddres;
-    private JTextField databasePort;
-    private JTextField databaseUsername;
-    private JTextField databasePassword;
-    private JPanel databasePortPanel;
-    private JPanel userDatabasePanel;
-    private JPanel databasePasswordPanel;
-    private JButton połączButton;
+    private JTextField nickInput;
+    private JPanel nickPanel;
     private JButton goToChat;
 
     private JPanel privateMessagesPanel;
@@ -42,7 +30,7 @@ public class MainFrame extends JFrame{
     private JPanel privateNickPanel;
     private JPanel labeledMessagesPanel;
 
-    public MainFrame(){
+    public MainFrameServer(){
         setSize(WIDTH, HEIGHT);
         setContentPane(mainPanel);
         setLocationRelativeTo(null);
@@ -67,20 +55,20 @@ public class MainFrame extends JFrame{
     public JPanel getIntroPanel() {
         return introPanel;
     }
-    public JLabel getServerLabel() {
-        return serverLabel;
+    public JLabel getIntroLabel() {
+        return introLabel;
     }
 
     public JTabbedPane getTabbedPanel() {
         return tabbedPanel;
     }
 
-    public JTextField getServerAdresInput() {
-        return serverAdresInput;
+    public JTextField getNickInput() {
+        return nickInput;
     }
 
-    public JPanel getSettingPanel() {
-        return settingPanel;
+    public JPanel getNickPanel() {
+        return nickPanel;
     }
 
     public JButton getGoToChat() {

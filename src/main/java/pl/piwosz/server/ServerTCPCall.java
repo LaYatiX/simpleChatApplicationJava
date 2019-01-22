@@ -8,12 +8,12 @@ import java.util.concurrent.FutureTask;
 
 public class ServerTCPCall implements Callable<String> {
     Socket mySocket;
-    List<Socket> sockets;
+    List<ObjectOutputStream> objectOutputStreams;
     FutureTaskCallback<String> ft;
 
-    public ServerTCPCall(Socket socket, List<Socket> sockets) {
+    public ServerTCPCall(Socket socket, List<ObjectOutputStream> objectOutputStreams) {
         mySocket = socket;
-        this.sockets = sockets;
+        this.objectOutputStreams = objectOutputStreams;
         ft = new FutureTaskCallback<String>(this);
     }
 
@@ -29,13 +29,11 @@ public class ServerTCPCall implements Callable<String> {
 
             Message message;
             while (!(message = (Message) ois.readObject()).equals("")) {
-                final String text = message.toString();
+                final Message message2 = message;
 
-                sockets.forEach(socket -> {
-                    PrintWriter out;
+                objectOutputStreams.forEach(out -> {
                     try {
-                        out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
-                        out.println(text);
+                        out.writeObject(message2);
                         out.flush();
                     } catch (IOException e) {
                         e.printStackTrace();
