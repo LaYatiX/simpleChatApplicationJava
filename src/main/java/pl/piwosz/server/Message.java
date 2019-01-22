@@ -1,6 +1,7 @@
 package pl.piwosz.server;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Message implements Serializable {
 
@@ -8,6 +9,7 @@ public class Message implements Serializable {
     private String nick;
     private String reciver;
     private boolean isPrivate;
+    private Date time;
 
     public Message(String text, String nick, String reciver, boolean isPrivate) {
         this.text = text;

@@ -65,10 +65,10 @@ public class JDBC {
 			conn = DriverManager.getConnection(kindOfDatabase + adres + ":" + port + "/",
 					connectionProps);
 		} catch (SQLException e) {
-			System.out.println("B��d po��czenia z baz� danych! " + e.getMessage() + ": " + e.getErrorCode());
+			System.out.println("Blad poloczenia z baza danych! " + e.getMessage() + ": " + e.getErrorCode());
 			System.exit(2);
 		}
-		System.out.println("Po��czenie z baz� danych: ... OK");
+		System.out.println("Polaczenie z baza danych: ... OK");
 		return conn;
 	}
 	
@@ -95,7 +95,7 @@ public class JDBC {
 	 * @param s - obiekt przesy�aj�cy zapytanie do bazy
 	 */
 	private static void closeConnection(Connection connection, Statement s) {
-		System.out.print("\nZamykanie polaczenia z baz�:");
+		System.out.print("\nZamykanie polaczenia z baza:");
 		try {
 			s.close();
 			connection.close();
@@ -135,7 +135,8 @@ public class JDBC {
 	 * Wy�wietla dane uzyskane zapytaniem select
 	 * @param r - wynik zapytania
 	 */
-	private static void printDataFromQuery(ResultSet r) {
+	private static String printDataFromQuery(ResultSet r) {
+		String res = "";
 		ResultSetMetaData rsmd;
 		try {
 			rsmd = r.getMetaData();
@@ -154,7 +155,7 @@ public class JDBC {
 				for (int i = 1; i <= numcols; i++) {
 					Object obj = r.getObject(i);
 					if (obj != null)
-						System.out.print("\t" + obj.toString() + "\t|");
+                        res+=  obj.toString() + "\t|";
 					else
 						System.out.print("\t");
 				}
@@ -163,6 +164,7 @@ public class JDBC {
 		} catch (SQLException e) {
 			System.out.println("Bl�d odczytu z bazy! " + e.getMessage() + ": " + e.getErrorCode());
 		}
+		return res;
 	}
 	/**
 	 * Metoda pobiera dane na podstawie nazwy kolumny

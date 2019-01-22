@@ -2,7 +2,7 @@ package pl.piwosz.server;
 
 import pl.piwosz.chat_gui.ui.controller.SettingsController;
 import pl.piwosz.chat_gui.ui.view.MainFrame;
-
+import java.sql.Connection;
 import javax.swing.*;
 import java.io.*;
 import java.net.InetAddress;
@@ -47,6 +47,7 @@ public class GroupChatListener implements Callable<String> {
                         privateMessagesArea.append(message + "\r\n");
                     }
                 }
+
             }
 
             mySocket.close();

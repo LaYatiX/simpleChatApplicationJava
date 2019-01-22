@@ -85,6 +85,10 @@ public class SettingsController {
             }
         });
     }
+    public void LoadLastMessages(){
+
+    }
+
     private void nickEnableLogic(){
         if(nickInput.getText().isEmpty())
             goToChat.setEnabled(false);

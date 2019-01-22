@@ -19,18 +19,6 @@ public class MainFrame extends JFrame{
     private JTabbedPane tabbedPanel;
     private JTextField serverAdresInput;
     private JPanel settingPanel;
-    private JPanel serverAdres;
-    private JTextField serverPortInput;
-    private JTextField databaseAddress;
-    private JPanel serverPort;
-    private JPanel databaseAddres;
-    private JTextField databasePort;
-    private JTextField databaseUsername;
-    private JTextField databasePassword;
-    private JPanel databasePortPanel;
-    private JPanel userDatabasePanel;
-    private JPanel databasePasswordPanel;
-    private JButton połączButton;
     private JButton goToChat;
 
     private JPanel privateMessagesPanel;
@@ -40,6 +28,9 @@ public class MainFrame extends JFrame{
     private JTextField privateNickField;
     private JButton goToPrivateChat;
     private JPanel privateNickPanel;
+    private JTextField adresPortInput;
+    private JTextField serverPortInput;
+    private JButton connectButton;
     private JPanel labeledMessagesPanel;
 
     public MainFrame(){
@@ -117,5 +108,17 @@ public class MainFrame extends JFrame{
 
     public JPanel getLabeledMessagesPanel() {
         return labeledMessagesPanel;
+    }
+
+    public JTextField getAdresPortInput() {
+        return adresPortInput;
+    }
+
+    public JTextField getServerPortInput() {
+        return serverPortInput;
+    }
+
+    public JButton getConnectButton() {
+        return connectButton;
     }
 }

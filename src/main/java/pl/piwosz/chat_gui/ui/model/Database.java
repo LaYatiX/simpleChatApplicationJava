@@ -1,5 +1,7 @@
 package pl.piwosz.chat_gui.ui.model;
 
+import pl.piwosz.server.Message;
+
 import java.sql.*;
 import java.util.Properties;
 
@@ -69,7 +71,7 @@ public class Database {
             System.out.println("Błąd połączenia z bazą danych! " + e.getMessage() + ": " + e.getErrorCode());
             System.exit(2);
         }
-        System.out.println("Połączenie z bazą danych: ... OK");
+        System.out.println("Polaczenie z baza danych: ... OK");
         return conn;
     }
 
@@ -116,7 +118,7 @@ public class Database {
      * @param sql - zapytanie
      * @return wynik
      */
-    private static ResultSet executeQuery(Statement s, String sql) {
+    public static ResultSet executeQuery(Statement s, String sql) {
         try {
             return s.executeQuery(sql);
         } catch (SQLException e) {
@@ -140,34 +142,44 @@ public class Database {
      *
      * @param r - wynik zapytania
      */
-    private static void printDataFromQuery(ResultSet r) {
+    public static String printDataFromQuery(ResultSet r) {
+        String res = "";
         ResultSetMetaData rsmd;
         try {
             rsmd = r.getMetaData();
             int numcols = rsmd.getColumnCount(); // pobieranie liczby kolumn
             // wyswietlanie nazw kolumn:
-            for (int i = 1; i <= numcols; i++) {
-                System.out.print("\t" + rsmd.getColumnLabel(i) + "\t|");
-            }
-            System.out
-                    .print("\n____________________________________________________________________________\n");
+//            for (int i = 1; i <= numcols; i++) {
+//                System.out.print("\t" + rsmd.getColumnLabel(i) + "\t|");
+//            }
+//            System.out
+//                    .print("\n____________________________________________________________________________\n");
             /**
-             * r.next() - przejście do kolejnego rekordu (wiersza) otrzymanych wyników
+             * r.next() - przej�cie do kolejnego rekordu (wiersza) otrzymanych wynik�w
              */
             // wyswietlanie kolejnych rekordow:
             while (r.next()) {
-                for (int i = 1; i <= numcols; i++) {
-                    Object obj = r.getObject(i);
-                    if (obj != null)
-                        System.out.print("\t" + obj.toString() + "\t|");
-                    else
-                        System.out.print("\t");
-                }
-                System.out.println();
+                String nick = r.getObject(1).toString();
+                String reciver = r.getObject(2).toString();
+                String text = r.getObject(3).toString();
+                Boolean isPrivate = r.getObject(4).toString().equals(0) ? false: true;
+                Message message = new Message(text, nick, reciver, isPrivate);
+                if(isPrivate) continue;
+                res+= message+ "\r\n";
+//
+//                for (int i = 1; i <= numcols; i++) {
+//                    Message obj = (Message) r.getObject(i);
+//                    if (obj != null)
+//                        res += obj.getText() + "\t";
+//                    else
+//                        System.out.print("\t");
+//                }
+//                System.out.println();
             }
         } catch (SQLException e) {
-            System.out.println("Bląd odczytu z bazy! " + e.getMessage() + ": " + e.getErrorCode());
+            System.out.println("Bl�d odczytu z bazy! " + e.getMessage() + ": " + e.getErrorCode());
         }
+        return res;
     }
 
     /**
